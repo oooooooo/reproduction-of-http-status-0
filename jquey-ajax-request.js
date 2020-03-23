@@ -9,9 +9,10 @@ const request = (url) => {
     "crossDomain": true,
     "data": {}
   };
-  $.ajax(settings).done(function (response) {
+
+  $.ajax(settings).done(response => {
     console.log('success')
-  }).fail(function (jqXHR, textStatus, errorThrown) {
+  }).fail((jqXHR, textStatus, errorThrown) => {
     console.log('fail')
     console.dir(jqXHR)
     console.log('textStatus: ' + textStatus)
