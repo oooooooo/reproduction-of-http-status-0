@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  web:
+    image: php:7.4.4
+    ports:
+      - '1080:1080'
+    volumes:
+      - type: bind
+        source: ./
+        target: /usr/src/app
+    working_dir: /usr/src/app
+    environment:
+      - PHP_CLI_SERVER_WORKERS=5
+    command: php -S 0.0.0.0:1080
