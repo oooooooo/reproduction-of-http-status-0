@@ -1,3 +1,8 @@
+const controller = new AbortController()
+const signal = controller.signal
+
+window.onbeforeunload = (e) => controller.abort()
+
 const request = (url) => {
   fetch(url, {
     method: 'POST',
@@ -6,6 +11,7 @@ const request = (url) => {
     },
     cache: 'no-store',
     mode: 'cors',
+    signal: signal,
     body: ''
   })
     .then(response => {
@@ -15,7 +21,14 @@ const request = (url) => {
       throw new Error(`Request failed: ${response.status}`)
     })
     .then(text => console.log(text))
-    .catch(err => {console.log(err)})
+    .catch(err => {
+      if (err.name === 'AbortError') {
+        console.info('Fetch aborted')
+      }
+      else {
+        console.error(err)
+      }
+    })
 };
 
 document.getElementById('sleep').onclick = () => {
